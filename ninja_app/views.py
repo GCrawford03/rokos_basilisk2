@@ -87,7 +87,7 @@ def game(request):
             request.session['stamina'] -= 1
         if request.POST['input']== "attack":
             request.session['prompt']= "You died."
-            request.session['stamina'] -= 1
+            request.session['stamina'] -= 100
         if request.POST['input']== "run":
             request.session['prompt']= "You run away and find food ('continue')"
             request.session['rations'] += int(random.random() * 50 + 200)
