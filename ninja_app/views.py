@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect
 import random, time, sys, random, threading
 from .models import *
-from .textgame import *
+# from .textgame import *
 from django.contrib import messages
 
 
@@ -31,17 +31,17 @@ def get_rations(request):
     if request.method == 'POST':
         if request.session['rations'] < 100:
             request.session['rations'] += 5
-    return render(request, 'ration.html')   
+    return render(request, 'rations.html')
 
 def train(request):
     if request.method == 'POST':
         if request.session['rations'] >= 10:
             request.session['rations'] -= 10
             request.session['stamina'] += 1
-    return render(request, 'ration.html')
+    return render(request, 'rations.html')
 
 def war(request):
-    if request.session['stamina'] > 30:
+    if request.session['stamina'] >= 30:
         request.session['stamina'] -= 30
         battleresult = random.randint(1, 2)
         if battleresult == 1:
@@ -50,6 +50,9 @@ def war(request):
         elif battleresult == 2:
             messages.warning(request, "you lose")
             return render(request, 'index.html')
+    elif request.session['stamina'] < 30:
+        messages.warning(request, "you don't have enough stamina!")
+        return render(request, 'index.html')
 
 def index(request):
     if "rations" and "stamina" and "prompt" not in request.session:

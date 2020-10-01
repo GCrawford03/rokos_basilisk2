@@ -7,7 +7,7 @@
     <title>Ninja Gold</title>
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="landing.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/landing.css' %}">
 </head>
 <body class="container-fluid"> 
 
@@ -22,18 +22,15 @@
     </nav>
 
     <video autoplay muted loop id="myVideo">
-        <source src="music_orb.mp4" type="video/mp4">
+        <source src="{% static 'vid/music_orb.mp4' type='video/mp4' %}">
       </video>
 
-      <iframe src="SummerGypsy.mp3" allow="autoplay" style="display:none" id="iframeAudio">
-      </iframe> 
-
-      <form action="/register" class="user" method="POST">
+    <form action="/register" class="user" method="POST">
         {% csrf_token %}
-    <form class="user">
-        <div class="form-group container">
-          <input type="" class="form-control" id="user" placeholder="Players Name">
-        </div>
+    <!-- <form class="userinput"> -->
+        <!-- <div class="form-group container"> -->
+          <input type="" class="form-control" id="user" name="first_name" placeholder="Players Name">
+        <!-- </div> -->
         <button type="submit" class="btn btn-secondary container">Play Game</button>
     </form>
     

@@ -7,7 +7,7 @@
     {% load static %}
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
         integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
-    <link rel="stylesheet" href="index.css">
+    <link rel="stylesheet" type="text/css" href="{% static 'styles/index.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 </head>
 
@@ -64,13 +64,23 @@
                     {% csrf_token %}
                     <input type="hidden" name="stamina">
                     <input class="btn btn-secondary" type="submit" value="war">
-                        {% if messages %}
+                    <div class="form-group alertbox">
+                    {% for message in messages %}
+                        <div class="alert {{ message.tags }} alert-dismissible" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    {{ message }}
+                        </div>
+                    {% endfor %}
+                    </div>
+                        <!-- {% if messages %}
                             <ul class="messages">
                                 {% for message in messages %}
                                     <li class="{{ message.tags }}">{{ message }}</li>
                                 {% endfor %}
                             </ul>
-                        {% endif %}
+                        {% endif %} -->
                 </form>
             </div>
         </div>
@@ -78,16 +88,17 @@
         <div class="textgame container">
             <form action="/process" method=POST>
                 {% csrf_token %}
-                    <textarea disabled class="log" name="logger" rows="4" cols="50">
-                        <p>{{request.session.prompt}}</p>
+                    <textarea disabled class="log" name="logger" rows="3" cols="50">{{request.session.prompt}}
                     </textarea>
-                <input type="text" name="input">
-                <input class="btn btn-secondary" type="submit">
+                    <div class="form-group">
+                        <input type="text" name="input" class="textbox">
+                        <input class="btn btn-secondary" type="submit">
+                    </div>
             </form>
         </div>
     </div>
     <div>
-        <img class="map" src="https://i.imgur.com/msJV1Kd.png" alt="Default Map" width="500" height="600">
+        <img class="map" src="{% static 'img/map.jpeg' %}" alt="Default Map">
     </div>
 
 </body>
@@ -127,5 +138,17 @@
         });
 
 </script>
+<script type="text/javascript">
+
+    $(document).ready(function () {
+     
+    window.setTimeout(function() {
+        $(".alert").fadeTo(1000, 0).slideUp(1000, function(){
+            $(this).remove(); 
+        });
+    }, 5000);
+     
+    });
+    </script>
 
 </html>
