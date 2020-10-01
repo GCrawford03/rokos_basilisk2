@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Ninja Gold</title>
+    {% load static %}
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+        integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z" crossorigin="anonymous">
+    <link rel="stylesheet" href="index.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+
+<body class="container-fluid">
+
+    <!-- Header Navigation-->
+    <nav class="navbar navbar-exapnd-md navbar-dark sticky-top">
+        <div class="container-fluid">
+            <div class="title col-md-auto">
+                <h1>Roko's Basilisk: Idle/Exploration Text Adventure</h1>
+            </div>
+            <a class="btn btn-outline-secondary" href="/logout" role="button">Exit</a>
+        </div>
+    </div>
+    <div>
+</nav>
+
+
+             <!-- game box -->
+    <div1 class="box1 my-2"></div1>
+    <div2 class="box1 my-2"></div2>
+
+    <div class="game">
+        <h2>Welcome, {{request.session.player_name}}</h2>
+        <ul id='stats' class="inventory list-inline">
+            <li class="list-inline-item"> Rations: {{ request.session.rations }}</li>
+            <li class="list-inline-item"> Stamina: {{ request.session.stamina }}</li>
+        </ul>
+
+    <div class="gamebuttons container-fluid justify-content-md-start">
+        <div class="row">
+            <div class='form col-lg-2 text-center' id='count'>
+                <h3>Get Rations</h3>
+                <p>Get 5 Rations</p>
+                <form action="/get_rations" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="rations">
+                    <input class="btn btn-secondary" type="submit" value="Get Rations">
+                </form>
+            </div>
+            <div class="form col-md-auto text-center" id='train'>
+                <h3>Train to Get Stamina</h3>
+                <p>Convert 10 Rations to 1 Stamina point</p>
+                <form action="/train" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="stamina">
+                    <input class="btn btn-secondary" type="submit" value="Train">
+                </form>
+            </div>
+            <div class="form col-lg-2 text-center" id='war'>
+                <h3>War</h3>
+                <p>Spend 30 stamina to go to war</p>
+                <form action="/war" method='POST'>
+                    {% csrf_token %}
+                    <input type="hidden" name="stamina">
+                    <input class="btn btn-secondary" type="submit" value="war">
+                        {% if messages %}
+                            <ul class="messages">
+                                {% for message in messages %}
+                                    <li class="{{ message.tags }}">{{ message }}</li>
+                                {% endfor %}
+                            </ul>
+                        {% endif %}
+                </form>
+            </div>
+        </div>
+    </div>
+        <div class="textgame container">
+            <form action="/process" method=POST>
+                {% csrf_token %}
+                    <textarea disabled class="log" name="logger" rows="4" cols="50">
+                        <p>{{request.session.prompt}}</p>
+                    </textarea>
+                <input type="text" name="input">
+                <input class="btn btn-secondary" type="submit">
+            </form>
+        </div>
+    </div>
+    <div>
+        <img class="map" src="https://i.imgur.com/msJV1Kd.png" alt="Default Map" width="500" height="600">
+    </div>
+
+</body>
+
+<script type='text/javascript'>
+        $(document).on('submit', '#count', function (e) {
+            e.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '/get_rations',
+                data: {
+                    rations:$('#rations').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success:function(response){
+                    document.getElementById('stats').innerHTML = response
+                    console.log(response)
+                }
+            });
+        });
+        $(document).on('submit', '#train', function (x) {
+            x.preventDefault();
+
+            $.ajax({
+                type: 'POST',
+                url: '/train',
+                data :{
+                    stamina:$('#stamina').val(),
+                    csrfmiddlewaretoken: $('input[name=csrfmiddlewaretoken]').val(),
+                },
+                success:function(update){
+                    document.getElementById('stats').innerHTML = update
+                    console.log(update)
+                }
+            });
+        });
+
+</script>
+
+</html>

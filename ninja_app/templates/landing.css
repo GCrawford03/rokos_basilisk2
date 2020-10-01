@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css?family=Source+Code+Pro');
+#myVideo {
+    position: fixed;
+    right: 0;
+    bottom: 0;
+    min-width: 100%;
+    min-height: 100%;
+  }
+
+.user{
+    margin:0;
+    position:absolute;
+    top:10%;
+    left:50%;
+    margin-right:-50%;
+    transform:translate(-50%,100%);
+    color:black;
+    font-size:1em;
+}
+
+.title h1{
+    color: #fff;
+    font-family: 'Source Code Pro' monospace;
+    font-size: xx-large; 
+    overflow: hidden;
+    border-right: .15em solid orange;
+    white-space: nowrap;
+    margin: 0 auto;
+    letter-spacing: .15em;
+    animation: 
+      typing 3.5s steps(40, end),
+      blink-caret .75s step-end infinite;
+  }
+@keyframes typing{
+from{width: 0;}
+to{width: 100%;}
+}
+
+@keyframes blink-caret{
+    from, to { border-color: transparent }
+    50% { border-color:orange;}
+}
+
+.box1 {
+    position: absolute;
+    top: 10%;
+    left: 50%;
+    height: 30px;
+    width: 30px;
+    background: transparent;
+}
+
+div1{
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    position: relative;
+    animation-name: circle1;
+    animation-duration: 12s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+div2{
+    width:20px;
+    height:20px;
+    border-radius: 50%;
+    position: relative;
+    animation-name: circle2;
+    animation-duration: 12s;
+    animation-iteration-count: 1;
+    animation-fill-mode: forwards;
+}
+
+@keyframes circle1 {
+    0%{background-color:black; left:2%; top:5%;}
+    25%{background-color:orange; left:95%; top:5%;}
+    50%{background-color:white;left:95%; top:90%;}
+    75%{background-color:black;left:2%; top:90%;} 
+    100%{background-color:white; left:2%; top:5%;}
+}
+@keyframes circle2 {
+    0%{background-color:black; left:95%; top:90%;}
+    25%{background-color:orange; left:2%; top:90%;}
+    50%{background-color:white;left:2%; top:5%;}
+    75%{background-color:black;left:95%; top:5%;} 
+    100%{background-color:white; left:95%; top:90%;}
+}
+
